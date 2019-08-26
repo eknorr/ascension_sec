@@ -1,0 +1,80 @@
+<!-- Apache .htaccess for extra hardening -->
+
+
+<FilesMatch "^.*(error_log|wp-config\.php|php.ini|\.[hH][tT][aApP].*)$">				//denies all web access to config files
+Order deny,allow
+Deny from all
+</FilesMatch>
+
+
+<files wp-config.php>             			//restricts access to the wp_config.php 
+order allow, deny 
+allow from 127.0.0.1
+deny from all
+</files>
+
+RewriteCond %{QUERY_STRING} author=d		//prevent wordpress username enumeration
+RewriteRule ^ /? [L,R=301]
+Options All -Indexes                        //makes site directories non-browsable
+
+<files wp_login.php>						//restricts access to wp_login.php
+order allow, deny 
+allow from 127.0.0.1
+deny from all
+</files>
+
+<!-- create a new .htaccess file and upload to the wp-admin directory -->
+.htpasswd file
+home/user/.htpasswds/public_html/wp-admin/htpasswd/
+then create a .htaccess file with the following code and upload it to your /wp-admin/
+
+AuthName "Admins Only"
+AuthUserFile /home/yourdirectory/.htpasswds/public_html/wp-admin/htpasswd
+AuthType basic
+require user yourusername
+
+<Files admin-ajax.php>
+Order allow,deny
+Allow from all
+Satisfy any
+</Files>
+
+
+<!-- 
+Cache control for browser code writen for one hour can change 
+
+download and upload size
+php_value upload_max_filesize 20M
+php_value post_max_size 20M
+php_value max_execution_time 200
+php_value max_input_time 200
+-->
+
+<!--
+<FilesMatch "\.(ico|png|jpeg|svg|ttf)$">
+	Header Set Cache-Control "max-age=3600, public"
+</FilesMatch>
+<FilesMatch "\.(js|css)$">
+	Header Set Cache-Control "public"
+	Header Set Expires "Sat, 24 Jan 2015 16:00:00 GMT"
+</FilesMatch>
+-->
+
+<!--
+
+AuthUserFile /dev/null
+AuthGroupFile /dev/null
+AuthName "WordPress Admin Access Control"
+AuthType Basic
+<LIMIT GET>
+order deny,allow
+deny from all
+allow from xx.xx.xx.xxx
+allow from xx.xx.xx.xxx
+</LIMIT>
+-->
+<!--
+order allow, deny 
+allow from 127.0.0.1
+deny from all
+-->
