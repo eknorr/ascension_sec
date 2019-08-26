@@ -1,0 +1,17 @@
+﻿IMPORTANT THINGS TO NOTE BEFORE YOU DO ANYTHING
+
+Exploits such as rogue PHP functions and 
+new administrative accounts may live in your database, 
+as well as spam (e.g. hidden ads for pharmaceuticals).
+
+This means that even a completely clean WP install (with no themes, no content, etc.) 
+would still contain the hack. The magic was in a couple of nefarious ‘RewriteRules’ added to the main 
+.htaccess file that routed all traffic to the site through an innocuously named “images.php” file.
+The safest route is to delete your .htaccess file (after taking note of any additions you’ve put in there like 301 redirects) 
+and then go to WordPress Settings:Permalinks to recreate your .htaccess file anew
+
+*****Hey, Change your table names before you modify your php stuff *****
+
+*****Don't forget to take away database privilages***** 
+
+1.) make your own admin for site and kill sysadmin 
